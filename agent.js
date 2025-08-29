@@ -14,6 +14,8 @@ const page = await browser.newPage();
 
 const model = aisdk(google("gemini-2.5-flash"));
 
+
+// Open the Browser
 const openBrowser = tool({
   name: "open_browser",
   description: "you open the browser",
@@ -26,6 +28,7 @@ const openBrowser = tool({
   },
 });
 
+//Going to Register Link Tool
 const gotoRegister = tool({
   name: "goto_create_account",
   description: "wait and  navigate to the signup page by using the url",
@@ -60,20 +63,8 @@ const gotoRegister = tool({
   },
 });
 
-const takeScreenshot = tool({
-  name: "take_screenshot",
-  description:
-    "wait 2 sec take the screenshot of the page and return the screenshot",
-  parameters: z.object({
-    filename: z.string().describe("The filename to save the screenshot as"),
-  }),
-  async execute({ filename }) {
-    await new Promise((r) => setTimeout(r, 1000));
-    page.screenshot({ path: `./images/` + filename });
-    return `screenshot saved..`;
-  },
-});
 
+//fill from tool
 const formFill = tool({
   name: "fill_form",
   description:
@@ -109,6 +100,7 @@ const formFill = tool({
   },
 });
 
+//submit form tool
 const submitForm = tool({
   name: "form_submit",
   description: "you submit the form by clicking the button",
@@ -121,6 +113,25 @@ const submitForm = tool({
   },
 });
 
+
+
+//take ss tool
+const takeScreenshot = tool({
+  name: "take_screenshot",
+  description:
+    "wait 2 sec take the screenshot of the page and return the screenshot",
+  parameters: z.object({
+    filename: z.string().describe("The filename to save the screenshot as"),
+  }),
+  async execute({ filename }) {
+    await new Promise((r) => setTimeout(r, 1000));
+    page.screenshot({ path: `./images/` + filename });
+    return `screenshot saved..`;
+  },
+});
+
+
+//Browser Automation Agent
 const browserAgent = new Agent({
   name: "My Agent",
   instructions: `
