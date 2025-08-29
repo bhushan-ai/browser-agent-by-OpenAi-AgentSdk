@@ -34,7 +34,7 @@ A browser automation agent built using the **OpenAI Agents SDK**, Puppeteer, and
    ```bash
    npx playwright install
    ```
-  ##r if only Chromium is required:
+ ##  if only Chromium is required:
   ```bash
   npx playwright install chromium
 ```
