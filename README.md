@@ -20,24 +20,25 @@ A browser automation agent built using the **OpenAI Agents SDK**, Puppeteer, and
 
 ## 📦 Installation & Setup
 
-1. **Clone the repository**
+## 1. Clone the repository
    ```bash
    git clone https://github.com/bhushan-ai/browser-agent-by-OpenAi-AgentSdk.git
    cd browser-agent-by-OpenAi-AgentSdk
+```
    
-2. **Install dependencies
+## 2. Install dependencies
    ```bash
    npm install
    ```
-3. **Download browser binaries (necessary for Puppeteer)
+## 3. Download browser binaries (necessary for Puppeteer)
    ```bash
    npx playwright install
    ```
-  **or if only Chromium is required:
+  ##r if only Chromium is required:
   ```bash
   npx playwright install chromium
 ```
-4. Configure your .env file
+## 4. Configure your .env file
  ```bash
 OPENAI_API_KEY=sk-your-openai-api-key
 GOOGLE_API_KEY=your-google-gemini-key
