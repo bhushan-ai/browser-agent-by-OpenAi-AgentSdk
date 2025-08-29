@@ -1,0 +1,21 @@
+{
+  "name": "browser-agent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
+    "@openai/agents": "^0.0.17",
+    "@openai/agents-extensions": "^0.0.17",
+    "dotenv": "^17.2.1",
+    "playwright": "^1.55.0",
+    "puppeteer": "^24.17.0",
+    "zod": "^3.25.76"
+  }
+}
