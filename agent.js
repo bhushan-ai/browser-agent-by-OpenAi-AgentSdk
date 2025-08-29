@@ -16,11 +16,11 @@ const model = aisdk(google("gemini-2.5-flash"));
 
 const openBrowser = tool({
   name: "open_browser",
+  description: "you open the browser",
   parameters: z.object({
     url: z.string(),
   }),
   async execute({ url }) {
-    await new Promise((r) => setTimeout(r, 1000));
     await page.goto(url, { waitUntil: "networkidle2" });
     return `Opened ${url}`;
   },
@@ -68,7 +68,7 @@ const takeScreenshot = tool({
     filename: z.string().describe("The filename to save the screenshot as"),
   }),
   async execute({ filename }) {
-    await new Promise((r) => setTimeout(r, 2000));
+    await new Promise((r) => setTimeout(r, 1000));
     page.screenshot({ path: `./images/` + filename });
     return `screenshot saved..`;
   },
@@ -90,21 +90,21 @@ const formFill = tool({
     await page.waitForSelector("form", { visible: true });
 
     if (await page.$('label[for="firstName"]')) {
-      await page.type("#firstName", firstName);
+      await page.type("#firstName", firstName, { delay: 150 });
     }
     if (await page.$('label[for="lastName"]')) {
-      await page.type("#lastName", lastName);
+      await page.type("#lastName", lastName, { delay: 150 });
     }
     if (await page.$('label[for="email"]')) {
-      await page.type("#email", email);
+      await page.type("#email", email, { delay: 150 });
     }
     if (await page.$('label[for="password"]')) {
-      await page.type("#password", password);
+      await page.type("#password", password, { delay: 150 });
     }
     if (await page.$('label[for="confirmPassword"]')) {
-      await page.type("#confirmPassword", confirmPassword);
+      await page.type("#confirmPassword", confirmPassword, { delay: 150 });
     }
-
+    await new Promise((r) => setTimeout(r, 1000));
     return "Form filled successfully";
   },
 });
@@ -114,35 +114,38 @@ const submitForm = tool({
   description: "you submit the form by clicking the button",
   parameters: z.object({}),
   async execute() {
-    await new Promise((r) => setTimeout(r, 2000));
     await page.click('button[type="submit"]');
+    console.log("form submitted successfully...");
+    await page.close()
+    await browser.close();
   },
 });
 
-const agent = new Agent({
+const browserAgent = new Agent({
   name: "My Agent",
   instructions: `
 You are a web automation agent.You use the tools to navigate through links and fill the forms:
 
 Rules:
-1. Open the website which is given by user.
+1.Open the website which is given by user.
 2.After every tool call,ALWAYS call 'take_screenshot' and take the next step according to screenshot
 3.search and navigate to the create account section of website using goto_create_account tool
-4. fill the given information in form by using fill_form tool
-   information:
-   firstname:jake1,
-   lastname:gynellhal,
-   email:jake1@gmail.com,
-   password:12345678
-   confirm password:12345678
+4. fill the given information given by user in form by using fill_form tool
 5. Submit the form by using form_submit tool
+6. After submit the form just say Account Created Successfully
 `,
   model,
   tools: [openBrowser, takeScreenshot, gotoRegister, formFill, submitForm],
 });
 
-const result = await run(
-  agent,
-  `goto https://ui.chaicode.com/ and fill the create account form`
-);
-console.log(result.finalOutput);
+async function browserTasks(query = "") {
+  const result = await run(browserAgent, query);
+  console.log(result.finalOutput);
+}
+
+browserTasks(`goto https://ui.chaicode.com/ and fill this information 
+   firstname:patrick,
+   lastname:bateman,
+   email:patrick@gmail.com,
+   password:12345678
+   confirm password:12345678 in create account form `);
