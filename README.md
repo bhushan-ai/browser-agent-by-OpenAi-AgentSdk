@@ -28,10 +28,11 @@ A browser automation agent built using the **OpenAI Agents SDK**, Puppeteer, and
 2. **Install dependencies
    ```bash
    npm install
+   ```
 3. **Download browser binaries (necessary for Puppeteer)
    ```bash
    npx playwright install
-
+   ```
   **or if only Chromium is required:
   ```bash
   npx playwright install chromium
@@ -40,3 +41,4 @@ A browser automation agent built using the **OpenAI Agents SDK**, Puppeteer, and
  ```bash
 OPENAI_API_KEY=sk-your-openai-api-key
 GOOGLE_API_KEY=your-google-gemini-key
+```
